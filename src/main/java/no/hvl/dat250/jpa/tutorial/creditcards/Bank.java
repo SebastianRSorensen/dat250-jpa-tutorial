@@ -5,21 +5,25 @@ import java.util.Collection;
 
 @Entity
 public class Bank {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    public Long getId() {
-        return id;
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    public String getName() {
-        // TODO: implement method!
-        return null;
-    }
+  private String name;
 
-    public Collection<CreditCard> getOwnedCards() {
-        // TODO: implement method!
-        return null;
-    }
+  @OneToMany(mappedBy = "owningBank")
+  private Collection<CreditCard> ownedCards;
+
+  public Long getId() {
+    return id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public Collection<CreditCard> getOwnedCards() {
+    return ownedCards;
+  }
 }

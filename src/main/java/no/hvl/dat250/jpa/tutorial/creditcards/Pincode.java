@@ -4,21 +4,23 @@ import jakarta.persistence.*;
 
 @Entity
 public class Pincode {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    public Long getId() {
-        return id;
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    public String getCode() {
-        // TODO: implement method!
-        return null;
-    }
+  private String code;
+  private Integer count;
 
-    public Integer getCount() {
-        // TODO: implement method!
-        return null;
-    }
+  public Long getId() {
+    return id;
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public Integer getCount() {
+    return count;
+  }
 }

@@ -5,32 +5,44 @@ import jakarta.persistence.*;
 @Entity
 public class CreditCard {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    public Integer getNumber() {
-        // TODO: implement method!
-        return null;
-    }
+  private Integer number;
+  private Integer balance;
+  private Integer creditLimit;
 
-    public Integer getBalance() {
-        // TODO: implement method!
-        return null;
-    }
+  @OneToOne
+  private Pincode pincode;
 
-    public Integer getCreditLimit() {
-        // TODO: implement method!
-        return null;
-    }
+  @ManyToOne
+  private Bank owningBank;
 
-    public Pincode getPincode() {
-        // TODO: implement method!
-        return null;
-    }
+  @ManyToOne
+  private Customer owner;
 
-    public Bank getOwningBank() {
-        // TODO: implement method!
-        return null;
-    }
+  public Integer getNumber() {
+    return number;
+  }
+
+  public Integer getBalance() {
+    return balance;
+  }
+
+  public Integer getCreditLimit() {
+    return creditLimit;
+  }
+
+  public Pincode getPincode() {
+    return pincode;
+  }
+
+  public Bank getOwningBank() {
+    return owningBank;
+  }
+
+  public Customer getOwner() {
+    return owner;
+  }
 }
