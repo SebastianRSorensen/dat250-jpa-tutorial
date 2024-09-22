@@ -13,7 +13,7 @@ public class CreditCard {
   private Integer balance;
   private Integer creditLimit;
 
-  @OneToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   private Pincode pincode;
 
   @ManyToOne
@@ -21,6 +21,36 @@ public class CreditCard {
 
   @ManyToOne
   private Customer owner;
+
+  public CreditCard() {}
+
+  public CreditCard(
+    Integer number,
+    Integer balance,
+    Integer creditLimit,
+    Pincode pincode,
+    Bank owningBank,
+    Customer owner
+  ) {
+    this.number = number;
+    this.balance = balance;
+    this.creditLimit = creditLimit;
+    this.pincode = pincode;
+    this.owningBank = owningBank;
+    this.owner = owner;
+
+    if (owningBank != null) {
+      owningBank.addOwnedCard(this);
+    }
+
+    if (owner != null) {
+      owner.addCreditCard(this);
+    }
+  }
+
+  public Long getId() {
+    return id;
+  }
 
   public Integer getNumber() {
     return number;
@@ -44,5 +74,13 @@ public class CreditCard {
 
   public Customer getOwner() {
     return owner;
+  }
+
+  void setOwningBank(Bank owningBank) {
+    this.owningBank = owningBank;
+  }
+
+  void setOwner(Customer owner) {
+    this.owner = owner;
   }
 }

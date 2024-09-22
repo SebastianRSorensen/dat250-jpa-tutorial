@@ -12,6 +12,13 @@ public class Pincode {
   private String code;
   private Integer count;
 
+  public Pincode() {}
+
+  public Pincode(String code, Integer count) {
+    this.code = code;
+    this.count = count;
+  }
+
   public Long getId() {
     return id;
   }

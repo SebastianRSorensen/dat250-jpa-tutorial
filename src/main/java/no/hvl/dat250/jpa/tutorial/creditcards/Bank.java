@@ -1,7 +1,8 @@
 package no.hvl.dat250.jpa.tutorial.creditcards;
 
 import jakarta.persistence.*;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Bank {
@@ -12,8 +13,26 @@ public class Bank {
 
   private String name;
 
-  @OneToMany(mappedBy = "owningBank")
-  private Collection<CreditCard> ownedCards;
+  @OneToMany(
+    mappedBy = "owningBank",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true
+  )
+  private Set<CreditCard> ownedCards = new HashSet<>();
+
+  public Bank() {}
+
+  public Bank(String name) {
+    this.name = name;
+  }
+
+  public Bank(String name, Set<CreditCard> ownedCards) {
+    this.name = name;
+    this.ownedCards = ownedCards;
+    for (CreditCard card : ownedCards) {
+      card.setOwningBank(this);
+    }
+  }
 
   public Long getId() {
     return id;
@@ -23,7 +42,16 @@ public class Bank {
     return name;
   }
 
-  public Collection<CreditCard> getOwnedCards() {
+  public Set<CreditCard> getOwnedCards() {
     return ownedCards;
+  }
+
+  void addOwnedCard(CreditCard card) {
+    if (card != null && !ownedCards.contains(card)) {
+      ownedCards.add(card);
+      if (card.getOwningBank() != this) {
+        card.setOwningBank(this);
+      }
+    }
   }
 }
